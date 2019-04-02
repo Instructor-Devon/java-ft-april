@@ -19,4 +19,37 @@ function SLQueue() {
         }
         this.tail = newThing;
     }
+
+    this.dequeue = function() {
+        // assign the head's next to head
+        if(this.isEmpty())
+            return "hey no stuff";
+        var toReturn = this.head;
+        this.head = this.head.next;
+        return toReturn.value;
+    }
+
+    this.contains = function(valToFind) {
+        var current = this.head;
+        while(current) {
+            if(current.value === valToFind)
+                return true;
+            current = current.next;
+        }
+        return false;
+    }
+
+    this.size = function() {
+        var count = 0,
+            current = this.head;
+        while(current) {
+            count++;
+            current = current.next;
+        }
+        return count;
+    }
 }
+
+var testQ = new SLQueue();
+
+console.log("count is ", testQ.size());
