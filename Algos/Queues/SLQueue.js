@@ -20,6 +20,20 @@ function SLQueue() {
         this.tail = newThing;
     }
 
+    this.getMin = function() {
+        // if empty return null
+        if(this.isEmpty())
+            return null;
+
+        var min = this.head.value;
+        //  varable assignment ; end condtion ; this happens after each iteration
+        for(var curr = this.head; curr != null; curr = curr.next) {
+            if(curr.value < min)
+                min = curr.value;
+        }
+        return min;
+    }
+
     this.dequeue = function() {
         // assign the head's next to head
         if(this.isEmpty())
@@ -50,6 +64,3 @@ function SLQueue() {
     }
 }
 
-var testQ = new SLQueue();
-
-console.log("count is ", testQ.size());
