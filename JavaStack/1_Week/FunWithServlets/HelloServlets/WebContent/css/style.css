@@ -1,0 +1,12 @@
+.tile {
+	height: 25px;
+	width: 25px;
+	display: inline-block;
+	border: 1px solid black;
+}
+.color1{	
+	background-color: blue;
+}
+.color2{
+	background-color: purple;
+}

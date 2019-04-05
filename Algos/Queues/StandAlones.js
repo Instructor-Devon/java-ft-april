@@ -19,13 +19,4 @@ function removeMins(queue) {
     }
 }
 
-var testQ = new SLQueue();
 
-testQ.enqueue(1);
-testQ.enqueue(12);
-testQ.enqueue(-100);
-testQ.enqueue(4);
-testQ.enqueue(-300);
-console.log(testQ.getMin());
-removeMins(testQ);
-console.log(testQ);

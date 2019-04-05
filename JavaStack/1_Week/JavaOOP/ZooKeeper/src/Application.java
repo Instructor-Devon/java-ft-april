@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Application {
 	public static void main(String[] args) {
@@ -13,6 +14,14 @@ public class Application {
 		{
 			p1, b1, w1
 		};
+		// value type
+		int x = 5;
+		// object
+		Integer y = 5;
+		
+		ArrayList<Integer> listy = new ArrayList<Integer>();
+		listy.add(5);
+		listy.add(10);
 	
 	
 

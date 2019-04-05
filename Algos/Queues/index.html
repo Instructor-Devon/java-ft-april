@@ -8,9 +8,17 @@
     <script src="SLNode.js" type="text/javascript"></script>
     <script src="SLQueue.js" type="text/javascript"></script>
     <script src="StandAlones.js" type="text/javascript"></script>
+    <script src="Playlist.js" type="text/javascript"></script>
+    <script defer src="DomStuff.js" type="text/javascript"></script>
 </head>
 <body>
-    
+    <h1 id="playing"></h1>
+    <form id="selector" action="/">
+        <input type="text" name="artist" placeholder="Artist Name">
+        <input type="text" name="song" placeholder="Song Title">
+        <button>Add to playlist</button>
+    </form>
+    <button id="next">Next Song</button>
 </body>
 </html>
 
