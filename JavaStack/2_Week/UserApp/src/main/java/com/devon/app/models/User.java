@@ -1,5 +1,6 @@
 package com.devon.app.models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,9 +19,9 @@ public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@Size(min=2)
+	@Size(min=2, max=30, message="Names must be between 2 and 30 characters")
 	private String firstName;
-	@Size(min=2)
+	@Size(min=2, max=30, message="Names must be between 2 and 30 characters")
 	private String lastName;
 	@Column(updatable=false)
 	private Date createdAt;
@@ -63,6 +64,10 @@ public class User {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	public String getCreatedAtFormatted() {
+		SimpleDateFormat dateformat = new SimpleDateFormat("EEEEEEEEE, 'the' dd, 'of' MMMMMMMMM, YYYY");
+		return dateformat.format(this.createdAt);
 	}
 	@PrePersist
 	protected void onCreate() {

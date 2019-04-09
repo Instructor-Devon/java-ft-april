@@ -38,4 +38,7 @@ public class UserService {
 		// save user
 		return this.uRepo.save(toUpdate);
 	}
+	public User updateUser(User user) {
+		return this.uRepo.save(user);
+	}
 }
