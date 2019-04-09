@@ -1,6 +1,6 @@
 
 public class Human {
-	public String getName() {
+	public String getNames() {
 		return "Human";
 	}
 }

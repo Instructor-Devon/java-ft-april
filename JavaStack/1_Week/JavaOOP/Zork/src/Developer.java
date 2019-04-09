@@ -1,7 +1,7 @@
 
 public class Developer extends Human {
 	@Override
-	public String getName() {
+	public String getNames() {
 		return "Developer";
 	}
 }
