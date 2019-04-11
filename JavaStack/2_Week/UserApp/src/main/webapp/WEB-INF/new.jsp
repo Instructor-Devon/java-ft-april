@@ -24,6 +24,26 @@
 				<form:label path="lastName">Last Name</form:label>
 				<form:input class="form-control" path="lastName"/>			
 			</div>
+			<div class="form-group">
+				<form:errors path="address.street"/>
+				<form:label path="address.street">Street</form:label>
+				<form:input class="form-control" path="address.street"/>			
+			</div>
+			<div class="form-group">
+				<form:errors path="address.city"/>
+				<form:label path="address.city">City</form:label>
+				<form:input class="form-control" path="address.city"/>			
+			</div>
+			<div class="form-group">
+				<form:errors path="address.state"/>
+				<form:label path="address.state">State</form:label>
+				<form:input class="form-control" path="address.state"/>			
+			</div>
+			<div class="form-group">
+				<form:errors path="address.zipCode"/>
+				<form:label path="address.zipCode">Zip Code</form:label>
+				<form:input class="form-control" path="address.zipCode"/>			
+			</div>
 			<button>Add User</button>
 		</form:form>
 	</div>

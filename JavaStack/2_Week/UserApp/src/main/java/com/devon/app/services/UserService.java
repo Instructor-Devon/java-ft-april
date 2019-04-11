@@ -17,6 +17,12 @@ public class UserService {
 	public List<User> getAllUsers() {
 		return this.uRepo.findAll();
 	}
+	public List<User> getAllUsersWithAddresses() {
+		return this.uRepo.findByAddressIdIsNotNull();
+	}
+	public List<User> getAllUsersWithNoAddresses() {
+		return this.uRepo.findByAddressIdIsNull();
+	}
 	public List<User> getAllUsersByLastName(String lastName) {
 		return this.uRepo.findByLastName(lastName);
 	}
@@ -25,6 +31,7 @@ public class UserService {
 		return user.orElse(null);
 	}
 	public User createUser(User user) {
+		user.getAddress().setResident(user);
 		return this.uRepo.save(user);
 	}
 	public User updateUser(Long id, String firstName, String lastName) {

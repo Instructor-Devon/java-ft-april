@@ -2,12 +2,17 @@ package com.devon.app.models;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -27,6 +32,13 @@ public class User {
 	private Date createdAt;
 	private Date updatedAt;
 	
+	@OneToOne(mappedBy="resident", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private Address address;
+	
+	// One to Many
+	@OneToMany(mappedBy="creator", fetch=FetchType.LAZY)
+	private List<Idea> ideas;
+	
 	public User() {
 		
 	}
@@ -40,6 +52,7 @@ public class User {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -64,6 +77,18 @@ public class User {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	public List<Idea> getIdeas() {
+		return ideas;
+	}
+	public void setIdeas(List<Idea> ideas) {
+		this.ideas = ideas;
 	}
 	public String getCreatedAtFormatted() {
 		SimpleDateFormat dateformat = new SimpleDateFormat("EEEEEEEEE, 'the' dd, 'of' MMMMMMMMM, YYYY");
