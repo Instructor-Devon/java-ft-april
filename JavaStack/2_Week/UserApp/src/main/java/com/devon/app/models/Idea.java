@@ -1,5 +1,6 @@
 package com.devon.app.models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -61,6 +62,10 @@ public class Idea {
 	}
 	public void setCreator(User creator) {
 		this.creator = creator;
+	}
+	public String getCreatedAtFormatted() {
+		SimpleDateFormat dateformat = new SimpleDateFormat("MMMM, dd YYYY");
+		return dateformat.format(this.createdAt);
 	}
 	@PrePersist
 	protected void onCreate() {

@@ -8,4 +8,6 @@ import com.devon.app.models.Idea;
 
 public interface IdeasRepository extends CrudRepository<Idea, Long> {
 	List<Idea> findAll();
+	// find ideas where idea creator firstname or idea creator lastname contains ???
+	List<Idea> findByCreatorFirstNameContainingOrCreatorLastNameContaining(String name1, String name2);
 }

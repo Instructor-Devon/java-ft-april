@@ -17,6 +17,9 @@ public class UserService {
 	public List<User> getAllUsers() {
 		return this.uRepo.findAll();
 	}
+	public List<User> getUsersOrdered() {
+		return this.uRepo.findByOrderByLastName();
+	}
 	public List<User> getAllUsersWithAddresses() {
 		return this.uRepo.findByAddressIdIsNotNull();
 	}

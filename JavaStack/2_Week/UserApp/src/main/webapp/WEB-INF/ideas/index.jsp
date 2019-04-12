@@ -11,14 +11,21 @@
 </head>
 <body>
 	<div class="container">
-		<h1>Here are some ideas!</h1>
+		<h1><a href="/">Users</a> | <a href="/ideas">Ideas</a></h1>
+		<hr />
+		<h2>Here are some ideas!</h2>
 		<a href="/ideas/new">Add an Idea</a>
+		<form action="/ideas/filter">
+			<input type="text" name="nameQuery" placeholder="Filter Name" />
+			<button>Search</button>
+		</form>
 		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th>User</th>
 					<th>Idea</th>
 					<th>Date Added</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -26,7 +33,8 @@
 				<tr>
 					<td>${ idea.creator.firstName } ${ idea.creator.lastName }</td>		
 					<td>${ idea.content  }</td>
-					<td>${ idea.createdAt }]</td>
+					<td>${ idea.getCreatedAtFormatted() }</td>
+					<td><a href="#">Like this</a></td>
 				</tr>
 			</c:forEach>
 			</tbody>

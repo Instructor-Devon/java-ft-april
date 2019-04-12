@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devon.app.models.Idea;
 import com.devon.app.models.User;
@@ -33,50 +35,43 @@ public class UserController {
 	// all users shown in a table
 	@RequestMapping("/")
 	public String Index(Model model, HttpSession session) {
-		model.addAttribute("homeless", this.uService.getAllUsersWithNoAddresses());
-		model.addAttribute("homes", this.uService.getAllUsersWithAddresses());
-		session.setAttribute("userId", 1);
 		
-		return "index.jsp";
-	}
-	@RequestMapping("/ideas") 
-	public String Ideas(Model model){
-		model.addAttribute("ideas", this.iService.getAllIdeas());
-		return "ideas.jsp";
+		model.addAttribute("users", this.uService.getUsersOrdered());
+		Long userSessionId = (Long)session.getAttribute("userId");
+		if(userSessionId == null) {
+			session.setAttribute("userId", 1L);
+			userSessionId = (Long)session.getAttribute("userId");
+		}
+		model.addAttribute("currentUser", this.uService.findUserById(userSessionId));
+		
+		return "/users/index.jsp";
 	}
 	@RequestMapping("/new")
 	public String New(@ModelAttribute("user") User user) {
-		return "new.jsp";
-	}
-	@RequestMapping("/ideas/new")
-	public String NewIdea(@ModelAttribute("idea") Idea idea, Model model, HttpSession session) {
-		model.addAttribute("userId", session.getAttribute("userId"));
-		return "newIdea.jsp";
-	}
-	@PostMapping("/ideas")
-	public String CreateIdea(@Valid @ModelAttribute("idea") Idea idea, BindingResult result) {
-		if(result.hasErrors())
-			return "newIdea.jsp";
-		this.iService.createIdea(idea);
-		return "redirect:/ideas/";
+		return "/users/new.jsp";
 	}
 	//@RequestMapping(value="/", method=RequestMethod.POST)
 	@PostMapping("/")
 	public String Create(@Valid @ModelAttribute("user") User user, BindingResult result) {
 		if(result.hasErrors())
-			return "new.jsp";
+			return "/users/new.jsp";
 		this.uService.createUser(user);
+		return "redirect:/";
+	}
+	@GetMapping("/login/{id}")
+	public String Login(@PathVariable("id") Long id, HttpSession session) {
+		session.setAttribute("userId", id);
 		return "redirect:/";
 	}
 	@GetMapping("/{id}")
 	public String Show(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("user", this.uService.findUserById(id));
-		return "show.jsp";
+		return "/users/show.jsp";
 	}
 	@GetMapping("/edit/{id}")
 	public String Edit(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("user", this.uService.findUserById(id));
-		return "edit.jsp";
+		return "/users/edit.jsp";
 	}
 	@PutMapping("/{id}")
 	public String Update(@Valid @ModelAttribute("user") User user, BindingResult result) {
@@ -85,7 +80,7 @@ public class UserController {
 		// user.firstName
 		// user.ect
 		if(result.hasErrors())
-			return "edit.jsp";
+			return "/users/edit.jsp";
 		this.uService.updateUser(user);
 		return "redirect:/";
 	}

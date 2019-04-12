@@ -17,7 +17,11 @@ public class IdeaService {
 	public List<Idea> getAllIdeas() {
 		return this.iRepo.findAll();
 	}
-	
+
+	public List<Idea> getIdeasFilteredByCreator(String nameSearch) {
+		return this.iRepo.findByCreatorFirstNameContainingOrCreatorLastNameContaining(nameSearch, nameSearch);
+	}
+
 	public Idea createIdea(Idea idea) {
 		return this.iRepo.save(idea);
 	}

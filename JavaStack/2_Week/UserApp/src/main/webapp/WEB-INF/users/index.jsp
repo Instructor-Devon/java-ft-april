@@ -11,7 +11,10 @@
 </head>
 <body>
 	<div class="container">
-		<h1>Here are my users with homes!</h1>
+		<h1><a href="/">Users</a> | <a href="/ideas">Ideas</a></h1>
+		<hr />
+		<h2>Users in System</h2>
+		<h4>Current User: ${ currentUser.firstName }</h4>
 		<a href="/new">Add a User</a>
 		<table class="table table-hover">
 			<thead>
@@ -23,34 +26,12 @@
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach items="${ homes }" var="user">
+			<c:forEach items="${ users }" var="user">
 				<tr>
 					<td>${ user.firstName }</td>
 					<td>${ user.lastName }</td>
 					<td>${ user.getCreatedAtFormatted() }</td>
-					<td><a href="/edit/${ user.id }">Edit</a></td>
-				</tr>
-			</c:forEach>
-			</tbody>
-		</table>
-		<h1>Here are my users with no homes :(</h1>
-		<a href="/new">Add a User</a>
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Date Added</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-			<c:forEach items="${ homeless }" var="user">
-				<tr>
-					<td>${ user.firstName }</td>
-					<td>${ user.lastName }</td>
-					<td>${ user.getCreatedAtFormatted() }</td>
-					<td><a href="/edit/${ user.id }">Edit</a></td>
+					<td><a href="/edit/${ user.id }">Edit</a> | <a href="/login/${ user.id }">Login as User</a></td>
 				</tr>
 			</c:forEach>
 			</tbody>
