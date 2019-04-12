@@ -25,6 +25,7 @@
 					<th>User</th>
 					<th>Idea</th>
 					<th>Date Added</th>
+					<th>Likes</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
@@ -34,7 +35,15 @@
 					<td>${ idea.creator.firstName } ${ idea.creator.lastName }</td>		
 					<td>${ idea.content  }</td>
 					<td>${ idea.getCreatedAtFormatted() }</td>
-					<td><a href="#">Like this</a></td>
+					<td>${ idea.likers.size() }</td>
+					<c:choose>
+						<c:when test="${ idea.likers.contains(user) }">
+							<td><a href="/ideas/${ idea.id }/like">Unlike</a></td>		
+						</c:when>
+						<c:otherwise>
+							<td><a href="/ideas/${ idea.id }/like">Like</a></td>
+						</c:otherwise>
+					</c:choose>
 				</tr>
 			</c:forEach>
 			</tbody>

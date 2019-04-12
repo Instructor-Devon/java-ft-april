@@ -93,14 +93,25 @@ public class SLStack {
 		
 		
 	}
-	// [1,3,3,4,3,3,1] => true
+	// [1,3,3,4,3,3,1] => true            
+	//       [3,3,1]  
 	// [1] => true
 	// [1,2] => false
-	// [1,2,2,1] => true
+	// [1,2,3,2,1] => true
+	//        R
+	//     [2,1]
 	
+	
+	// 
+	// [1,2,3,2,1] => true
+	//            R
+	//       [2,1]
+	//            W
 	public boolean isPalindrome() {
 		// find midpoint
-		int midpoint = this.size()/2;
+		int size = this.size();
+		int midpoint = size/2;
+		boolean isOdd = size%2!=0;
 		int count = 0;
 		SLStack helper = new SLStack();
 		
@@ -109,13 +120,21 @@ public class SLStack {
 		
 		SLNode runner = this.head;
 		SLNode walker = helper.head;
-		// [1,2,2,1]
-		//     [2,1]
+		// [1,2,1]
+		// [1]
 		while(runner != null) {
 			if(count < midpoint) {
 				helper.push(runner.value);
 				walker = helper.head;
 			}
+			// skip over mid if we are odd AND exactly at the midpoint
+			 else if(isOdd && count == midpoint) {
+				 runner = runner.next;
+				 count++;
+				 continue;
+				
+			 }
+			// else
 			else {
 				// compare helper vals to runner vals
 				if(runner.value != walker.value)

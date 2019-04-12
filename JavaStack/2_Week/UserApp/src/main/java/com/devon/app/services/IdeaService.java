@@ -13,7 +13,9 @@ public class IdeaService {
 	public IdeaService(IdeasRepository iRepo) {
 		this.iRepo = iRepo;
 	}
-	
+	public Idea findIdeaById(Long id) {
+		return this.iRepo.findById(id).orElse(null);
+	}
 	public List<Idea> getAllIdeas() {
 		return this.iRepo.findAll();
 	}

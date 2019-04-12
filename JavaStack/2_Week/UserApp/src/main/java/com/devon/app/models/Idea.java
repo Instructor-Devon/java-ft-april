@@ -2,6 +2,7 @@ package com.devon.app.models;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -30,6 +33,18 @@ public class Idea {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private User creator;
+	
+	
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(
+		name="likes", 
+		joinColumns = @JoinColumn(name="idea_id"),
+		inverseJoinColumns = @JoinColumn(name="user_id")
+	)
+	private List<User> likers;
+	
+	
+	
 	public Idea() {
 	
 	}
@@ -62,6 +77,12 @@ public class Idea {
 	}
 	public void setCreator(User creator) {
 		this.creator = creator;
+	}
+	public List<User> getLikers() {
+		return likers;
+	}
+	public void setLikers(List<User> likers) {
+		this.likers = likers;
 	}
 	public String getCreatedAtFormatted() {
 		SimpleDateFormat dateformat = new SimpleDateFormat("MMMM, dd YYYY");

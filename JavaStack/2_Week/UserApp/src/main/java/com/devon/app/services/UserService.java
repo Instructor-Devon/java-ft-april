@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.devon.app.models.Idea;
 import com.devon.app.models.User;
 import com.devon.app.respositories.UserRepository;
 
@@ -50,5 +51,18 @@ public class UserService {
 	}
 	public User updateUser(User user) {
 		return this.uRepo.save(user);
+	}
+	public void likeAnIdea(User user, Idea idea) {
+		// get user's likedIdeas
+		List<Idea> ideasLiked = user.getIdeasLiked();
+		// we could prevent duplicate likes here
+		if(!ideasLiked.contains(idea))
+		// add idea to it (if not already there)
+			ideasLiked.add(idea);
+		else {
+			ideasLiked.remove(idea);
+		}
+		// save user
+		this.uRepo.save(user);
 	}
 }

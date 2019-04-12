@@ -4,13 +4,12 @@ public class StackTester {
 		SLStack stack = new SLStack();
 		
 		
-		stack.push(1);
-		stack.push(2);
 		stack.push(2);
 		stack.push(1);
+		stack.push(2);
 		
 		
-		stack.isPalindrome();
+		System.out.println(stack.isPalindrome());
 		
 		
 		

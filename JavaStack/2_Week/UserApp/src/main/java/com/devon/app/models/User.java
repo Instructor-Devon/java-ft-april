@@ -11,6 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
@@ -38,6 +41,17 @@ public class User {
 	// One to Many
 	@OneToMany(mappedBy="creator", fetch=FetchType.LAZY)
 	private List<Idea> ideas;
+	
+	
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(
+		name="likes", 
+		joinColumns = @JoinColumn(name="user_id"),
+		inverseJoinColumns = @JoinColumn(name="idea_id")
+	)
+	private List<Idea> ideasLiked;
+	
+	
 	
 	public User() {
 		
@@ -89,6 +103,12 @@ public class User {
 	}
 	public void setIdeas(List<Idea> ideas) {
 		this.ideas = ideas;
+	}
+	public List<Idea> getIdeasLiked() {
+		return ideasLiked;
+	}
+	public void setIdeasLiked(List<Idea> ideasLiked) {
+		this.ideasLiked = ideasLiked;
 	}
 	public String getCreatedAtFormatted() {
 		SimpleDateFormat dateformat = new SimpleDateFormat("EEEEEEEEE, 'the' dd, 'of' MMMMMMMMM, YYYY");
