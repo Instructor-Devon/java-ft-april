@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.devon.app.models.Idea;
 import com.devon.app.models.User;
+import com.devon.app.models.UserForm;
 import com.devon.app.respositories.UserRepository;
 
 @Service
@@ -35,7 +36,6 @@ public class UserService {
 		return user.orElse(null);
 	}
 	public User createUser(User user) {
-		user.getAddress().setResident(user);
 		return this.uRepo.save(user);
 	}
 	public User updateUser(Long id, String firstName, String lastName) {
@@ -47,6 +47,14 @@ public class UserService {
 		toUpdate.setFirstName(firstName);
 		toUpdate.setLastName(lastName);
 		// save user
+		return this.uRepo.save(toUpdate);
+	}
+	public User updateUser(Long id, UserForm userForm) {
+		// query for user
+		User toUpdate = this.uRepo.findById(id).orElse(null);
+		if(toUpdate == null)
+			return null;
+		toUpdate.updateFromUserForm(userForm);
 		return this.uRepo.save(toUpdate);
 	}
 	public User updateUser(User user) {

@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.devon.app.models.Address;
 import com.devon.app.models.Idea;
 import com.devon.app.models.User;
+import com.devon.app.models.UserForm;
 import com.devon.app.services.IdeaService;
 import com.devon.app.services.UserService;
 
@@ -47,15 +50,19 @@ public class UserController {
 		return "/users/index.jsp";
 	}
 	@RequestMapping("/new")
-	public String New(@ModelAttribute("user") User user) {
+	public String New(@ModelAttribute("user") UserForm user) {
 		return "/users/new.jsp";
 	}
 	//@RequestMapping(value="/", method=RequestMethod.POST)
 	@PostMapping("/")
-	public String Create(@Valid @ModelAttribute("user") User user, BindingResult result) {
+	public String Create(@Valid @ModelAttribute("user") UserForm user, BindingResult result) {
 		if(result.hasErrors())
 			return "/users/new.jsp";
-		this.uService.createUser(user);
+		
+		// calling User constructor: User(UserForm user)
+		User newUser = new User(user);
+		this.uService.createUser(newUser);
+		
 		return "redirect:/";
 	}
 	@GetMapping("/login/{id}")
@@ -70,19 +77,32 @@ public class UserController {
 	}
 	@GetMapping("/edit/{id}")
 	public String Edit(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("user", this.uService.findUserById(id));
+		User user = this.uService.findUserById(id);
+		if(user == null) {
+			return "redirect:/";
+		}
+		UserForm editUser = new UserForm(user);
+		model.addAttribute("user", editUser);
 		return "/users/edit.jsp";
 	}
-	@PutMapping("/{id}")
-	public String Update(@Valid @ModelAttribute("user") User user, BindingResult result) {
+	@PostMapping("/{id}")
+	public String Update(@Valid @ModelAttribute("user") UserForm userForm, BindingResult result, @PathVariable("id") Long id) {
 		// full user entity
 		// user.id
 		// user.firstName
 		// user.ect
 		if(result.hasErrors())
 			return "/users/edit.jsp";
-		this.uService.updateUser(user);
+		this.uService.updateUser(id, userForm);
 		return "redirect:/";
+	}
+	@PostMapping("/test")
+	public String Test(@RequestParam("LOL") String LOL, RedirectAttributes redirs) {
+		String[] errors = new String[]{
+			"Dont do that silly", "Tags must be comma separated"
+		};
+		redirs.addFlashAttribute("error", errors);
+		return "redirect:/edit/1";
 	}
 	
 }

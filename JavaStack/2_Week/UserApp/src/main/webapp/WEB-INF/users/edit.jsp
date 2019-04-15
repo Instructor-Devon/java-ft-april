@@ -13,9 +13,8 @@
 </head>
 <body>
 	<div class="container">
-		<h1>Edit User!</h1>
-		<form:form action="/${ user.id }" method="POST" modelAttribute="user">
-			<input type="hidden" name="_method" value="put"/>
+		<h1>Update User</h1>
+		<form:form action="/${ user.userId }" method="POST" modelAttribute="user">
 			<div class="form-group">
 				<form:errors path="firstName"/>
 				<form:label path="firstName">First Name</form:label>
@@ -27,28 +26,26 @@
 				<form:input class="form-control" path="lastName"/>			
 			</div>
 			<div class="form-group">
-				<form:errors path="address.street"/>
-				<form:label path="address.street">Street</form:label>
-				<form:input class="form-control" path="address.street"/>			
+				<form:errors path="street"/>
+				<form:label path="street">Street</form:label>
+				<form:input class="form-control" path="street"/>			
 			</div>
 			<div class="form-group">
-				<form:errors path="address.city"/>
-				<form:label path="address.city">City</form:label>
-				<form:input class="form-control" path="address.city"/>			
+				<form:errors path="city"/>
+				<form:label path="city">City</form:label>
+				<form:input class="form-control" path="city"/>			
 			</div>
 			<div class="form-group">
-				<form:errors path="address.state"/>
-				<form:label path="address.state">State</form:label>
-				<form:input class="form-control" path="address.state"/>			
+				<form:errors path="state"/>
+				<form:label path="state">State</form:label>
+				<form:input class="form-control" path="state"/>			
 			</div>
 			<div class="form-group">
-				<form:errors path="address.zipCode"/>
-				<form:label path="address.zipCode">Zip Code</form:label>
-				<form:input class="form-control" path="address.zipCode"/>			
+				<form:errors path="zipCode"/>
+				<form:label path="zipCode">Zip Code</form:label>
+				<form:input class="form-control" path="zipCode"/>			
 			</div>
-			<form:hidden path="address.id" value="${ user.address.id }"/>
-			<form:hidden path="address.resident" value="${ user.id }"/>
-			<button>Add User</button>
+			<button>Update User</button>
 		</form:form>
 	</div>
 </body>

@@ -19,8 +19,7 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th>First Name</th>
-					<th>Last Name</th>
+					<th>Name</th>
 					<th>Date Added</th>
 					<th>Actions</th>
 				</tr>
@@ -28,8 +27,7 @@
 			<tbody>
 			<c:forEach items="${ users }" var="user">
 				<tr>
-					<td>${ user.firstName }</td>
-					<td>${ user.lastName }</td>
+					<td><a href="/${ user.id }">${ user.firstName } ${ user.lastName }</a></td>
 					<td>${ user.getCreatedAtFormatted() }</td>
 					<td><a href="/edit/${ user.id }">Edit</a> | <a href="/login/${ user.id }">Login as User</a></td>
 				</tr>

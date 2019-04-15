@@ -16,6 +16,7 @@ public class Address {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	@Size(min=2)
 	private String street;
 	private String city;
 	private String state;
@@ -24,6 +25,14 @@ public class Address {
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private User resident;
+
+	public Address(String street, String city, String state, Integer zipCode) {
+	
+		this.street = street;
+		this.city = city;
+		this.state = state;
+		this.zipCode = zipCode;
+	}
 
 	public Address() {
 

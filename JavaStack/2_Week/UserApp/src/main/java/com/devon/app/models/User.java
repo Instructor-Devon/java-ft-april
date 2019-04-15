@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -27,12 +28,14 @@ public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	@Pattern(regexp="^[A-Za-z]+$")
 	@Size(min=2, max=30, message="Names must be between 2 and 30 characters")
 	private String firstName;
 	@Size(min=2, max=30, message="Names must be between 2 and 30 characters")
 	private String lastName;
 	@Column(updatable=false)
 	private Date createdAt;
+	
 	private Date updatedAt;
 	
 	@OneToOne(mappedBy="resident", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
@@ -59,6 +62,14 @@ public class User {
 	public User(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
+	}
+	public User(UserForm userForm) {
+		Address newAddress = new Address(userForm.getStreet(),
+			userForm.getCity(), userForm.getState(), userForm.getZipCode());
+		newAddress.setResident(this);
+		this.firstName = userForm.getFirstName();
+		this.lastName = userForm.getLastName();
+		this.address = newAddress;
 	}
 	public Long getId() {
 		return id;
@@ -109,6 +120,21 @@ public class User {
 	}
 	public void setIdeasLiked(List<Idea> ideasLiked) {
 		this.ideasLiked = ideasLiked;
+	}
+	public void updateFromUserForm(UserForm userForm) {
+		Address a = this.address;
+		if(a == null) {
+			a = new Address();
+			this.address = a;
+			a.setResident(this);
+		}
+		a.setStreet(userForm.getStreet());
+		a.setCity(userForm.getCity());
+		a.setState(userForm.getState());
+		a.setZipCode(userForm.getZipCode());
+		
+		this.firstName = userForm.getFirstName();
+		this.lastName = userForm.getLastName();
 	}
 	public String getCreatedAtFormatted() {
 		SimpleDateFormat dateformat = new SimpleDateFormat("EEEEEEEEE, 'the' dd, 'of' MMMMMMMMM, YYYY");

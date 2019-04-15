@@ -18,7 +18,7 @@
 		<p>${ user.address.street}</p>
 		<p>${ user.address.city }, ${ user.address.state }</p>
 		</c:if>
-		<h3>You liked these posts!</h3>
+		<h3>${ user.firstName } liked these posts!</h3>
 		<ul>
 			<c:forEach items="${ user.ideasLiked }" var="idea">
 				<li>${ idea.content }</li>
