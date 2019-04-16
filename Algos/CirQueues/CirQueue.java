@@ -29,4 +29,45 @@ public class CirQueue {
 
     }
 
+    public boolean enqueue(int val) {
+        if(this.isFull())
+            return false;
+
+        // move head and tail one forward (or just 0)
+        if(this.isEmpty()) {
+            this.head += 1;
+            this.tail +=1;
+            this.queue[this.tail] = val;
+        }
+        else {
+            
+           
+            this.tail = (this.tail + 1) % this.maxSize;
+            this.queue[this.tail] = val;
+        }
+        return true;
+    }
+
+    public Integer dequeue() {
+
+        // if empty return null
+        if(this.isEmpty())
+            return null;
+        
+        // make var for val at head
+        Integer valToReturn = this.queue[this.head];
+
+
+        // if one thing move H/T to -1
+        if(this.head == this.tail) {
+            this.head = -1;
+            this.tail = -1;
+        }
+        // otherwise move head forward
+        this.head = (this.head + 1) % this.maxSize;
+            // [13,5,6,7]
+            //     T   H   
+        return valToReturn;         
+    }
+
 }
