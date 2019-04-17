@@ -31,6 +31,20 @@
 				<form:input type="email" path="email" class="form-control"/>
 			</div>
 			<div class="form-group">
+				<form:label path="city">City</form:label>
+				<form:errors path="city" />
+				<form:input path="city" class="form-control"/>
+			</div>
+			<div class="form-group">
+				<form:label path="state">State</form:label>
+				<form:errors path="state" />
+				<form:select path="state">
+				<c:forEach items="${ states }" var="state">
+					<option value="${ state }">${ state }</option>
+				</c:forEach>
+				</form:select>
+			</div>
+			<div class="form-group">
 				<form:label path="password">Password</form:label>
 				<form:errors path="password" />
 				<form:input path="password" class="form-control"/>

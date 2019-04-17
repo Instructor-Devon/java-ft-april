@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.devon.app.models.Location;
 import com.devon.app.models.User;
 import com.devon.app.services.UserService;
 import com.devon.app.validators.UserValidator;
@@ -25,7 +27,8 @@ public class UserController {
 	private UserValidator validator;
 	
 	@GetMapping("/")
-	public String Index(@ModelAttribute("buster") User user) {
+	public String Index(@ModelAttribute("buster") User user, Model model) {
+		model.addAttribute("states", Location.States);
 		return "index.jsp";
 	}
 	// Registration
@@ -68,12 +71,16 @@ public class UserController {
 		return "redirect:/";
 	}
 	@GetMapping("/success")
-	public String Success(HttpSession session) {
+	public String Success(HttpSession session, Model model) {
 		// prevent unauthenticated users from getting here!
 		if(session.getAttribute("userId") == null) {
 			return "redirect:/";
 		}
-		
+		Long userId = (Long)session.getAttribute("userId");
+		User user = this.uService.getUserById(userId);
+		model.addAttribute("user", user);
+		model.addAttribute("usersStates", this.uService.usersStates(user.getState()));
+		model.addAttribute("otherStates", this.uService.otherStates(user.getState()));
 		return "success.jsp";
 				
 	}

@@ -1,3 +1,5 @@
+import org.omg.CORBA.INTERNAL;
+
 public class CirQueue {
     private int head;
     private int tail;
@@ -27,6 +29,24 @@ public class CirQueue {
         // if head is tail plus one
         return (this.tail + 1) % this.maxSize == this.head;
 
+    }
+
+    public int size() {
+        // STEP 1
+
+        if(this.isEmpty())
+            return 0;
+
+        int count = 0;
+
+
+        for(int i = this.head; i != this.tail; i = (i + 1) % this.maxSize) {
+            count++;
+        }
+        // q [0,0,0,0,0]
+        //    T   H    
+        return count + 1;
+        
     }
 
     public boolean enqueue(int val) {
@@ -68,6 +88,41 @@ public class CirQueue {
             // [13,5,6,7]
             //     T   H   
         return valToReturn;         
+    }
+
+    public void display() {
+        // if empty: "Queue is Empty"
+        // if full: "Queue is Full"
+        // Head: X
+        // Tail: Y
+        // Size: Z
+        // Each Value
+        if(isEmpty()) {
+            System.out.println("Queue is Empty");
+            return;
+        }
+
+        if(isFull()) {
+            System.out.println("Queue is Full");
+        }
+
+        System.out.println(String.format("Head: %d", this.head));
+        System.out.println(String.format("Tail: %d", this.tail));
+        System.out.println(String.format("Size: %d", this.size()));
+
+        // loop array
+        // [3,2,5,46]
+        int pos = 0;
+        int i;
+        for(i = this.head; i != this.tail; i = (i + 1) % this.maxSize) {
+            System.out.println(String.format("Pos: %d, Value: %d", pos, this.queue[i]));
+            // Pos: 0, Value: 1
+            pos++;
+        }
+        System.out.println(String.format("Pos: %d, Value: %d", pos, this.queue[i]));
+
+
+
     }
 
 }

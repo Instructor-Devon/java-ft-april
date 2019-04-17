@@ -9,6 +9,6 @@ public class CQTester {
         q.dequeue();
         q.enqueue(5);
         q.enqueue(6);
-        System.out.println(q.Front());
+        q.display();
     }
 }
