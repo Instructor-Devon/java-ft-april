@@ -32,8 +32,17 @@ public class Country {
 	private String code2;
 	@OneToMany(mappedBy="country",fetch=FetchType.LAZY)
 	@JsonIgnore
+	private List<City> cities;
+	@OneToMany(mappedBy="country",fetch=FetchType.LAZY)
+	@JsonIgnore
 	private List<Language> languages;
 	
+	public List<City> getCities() {
+		return cities;
+	}
+	public void setCities(List<City> cities) {
+		this.cities = cities;
+	}
 	public List<Language> getLanguages() {
 		return languages;
 	}

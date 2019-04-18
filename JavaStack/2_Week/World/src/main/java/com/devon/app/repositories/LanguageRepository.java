@@ -13,4 +13,7 @@ public interface LanguageRepository extends CrudRepository<Language, Integer> {
 	
 	@Query("SELECT c.name, l.language, l.percentage FROM Country c JOIN c.languages l ORDER BY l.percentage DESC")
 	List<Object[]> countriesByLangPercentage();
+	
+	@Query("SELECT co.name, la.language, la.percentage FROM Country co JOIN co.languages la WHERE la.percentage > 89")
+	List<Object[]> languagesByPercentSpoken();
 }

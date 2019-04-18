@@ -15,4 +15,7 @@ public interface CountryRepository extends CrudRepository<Country, Integer> {
 	
 	@Query("SELECT d FROM Country d WHERE d.region = ?1")
 	List<Country> findCountiesByRegion(String region);
+	
+	@Query("select co.name, COUNT(ci.country) AS num_cities FROM Country co JOIN co.cities ci GROUP BY ci.country ORDER BY num_cities DESC")
+	List<Object[]> countriesByCityCount();
 }
